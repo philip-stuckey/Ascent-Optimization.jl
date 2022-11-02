@@ -39,4 +39,17 @@ function eccentricity_vector(ship,body)
 	return r̂ - (v×l)/μ
 end
 
+
+±(a,b) = (a+b, a-b)
+function apsies(ship; body::Planet)
+    μ = body.gravitational_parameter
+    ε = specific_energy(ship,body)
+    l = specific_angular_momentum(ship)
+    return (-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
+end
+
+apoapsis(ship,body) = maximum(apsies(ship;body))  
+periapsis(ship,body) = minimum(apsies(ship;body))
+
+
 end # module OrbitalMechanics
