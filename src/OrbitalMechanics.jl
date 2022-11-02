@@ -20,7 +20,7 @@ export Ship,
 include("ship.jl")
 
 
-export Planet, surface_gravity, circular_orbit_speed
+export Planet, surface_gravity, surface_speed, circular_orbit_speed
 include("planet.jl")
 
 export specific_energy, semi_major_axis, period, eccentricity, eccentricity_vector, apoapsis, periapsis
@@ -61,15 +61,19 @@ function eccentricity_vector(ship,body)
 end
 
 ±(a,b) = (a+b, a-b)
+∓(a,b) = (a-b, a+b)
 function apsies(ship; body::Planet)
     μ = body.gravitational_parameter
     ε = specific_energy(ship,body)
     l = specific_angular_momentum(ship)
-    return (-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
+    return  if ε < 0
+		(-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
+	else
+
 end
 
-apoapsis(ship,body) = maximum(apsies(ship;body))  
-periapsis(ship,body) = minimum(apsies(ship;body))
+apoapsis(ship,body) = apsies(ship;body)[2]
+periapsis(ship,body) = apsies(ship;body)[1]
 
 function circular_orbit_speed(ship::Ship, body::Planet) 
 	r = norm(ship.position)
