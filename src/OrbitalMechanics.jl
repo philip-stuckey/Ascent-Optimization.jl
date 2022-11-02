@@ -23,6 +23,12 @@ function semi_major_axis(ship,body)
 	return -μ/(2*ε)
 end
 
+function period(ship, body)
+	a = semi_major_axis(ship,body)
+	μ = body.gravitational_parameter
+	return 2π*√(a^3 / μ)
+end
+
 function eccentricity(ship,body) 
 	μ = body.gravitational_parameter
 	ε = specific_energy(ship,body)
