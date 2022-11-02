@@ -69,11 +69,12 @@ function apsies(ship; body::Planet)
     return  if ε < 0
 		(-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
 	else
-
+		(Inf, (-μ + √(μ^2 + 2ε*(l⋅l))) ./ 2ε)
+	end
 end
 
-apoapsis(ship,body) = apsies(ship;body)[2]
-periapsis(ship,body) = apsies(ship;body)[1]
+apoapsis(ship,body) = apsies(ship;body)[1]
+periapsis(ship,body) = apsies(ship;body)[2]
 
 function circular_orbit_speed(ship::Ship, body::Planet) 
 	r = norm(ship.position)
