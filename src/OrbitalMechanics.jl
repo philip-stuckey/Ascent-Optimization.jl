@@ -78,4 +78,12 @@ function circular_orbit_speed(ship::Ship, body::Planet)
 end
 
 
+function orbit(ship, body)
+	l⃗ = specific_angular_momentum(ship)
+	e = eccentricity(ship, body)
+	μ = body.gravitational_parameter
+	return θ -> (l⃗⋅l⃗) / (μ * (1 + e * cos(θ)))
+end
+
+
 end # module OrbitalMechanics
