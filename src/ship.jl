@@ -37,3 +37,5 @@ function delta_v(ship)
 	m₁ = ship.dry_mass
 	return vₑₓ * log(m₀/m₁)
 end
+
+specific_angular_momentum(ship) = (ship.position × ship.velocity)
