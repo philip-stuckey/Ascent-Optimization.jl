@@ -5,3 +5,4 @@ struct Planet
 end
 
 g(body::Planet) = body.gravitational_parameter / body.radius^2
+circular_orbit_speed(r, body) = √(body.gravitational_parameter/r)
