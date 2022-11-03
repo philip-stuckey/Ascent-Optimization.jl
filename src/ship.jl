@@ -1,11 +1,13 @@
+
 Base.@kwdef mutable struct Ship
     const dry_mass::Float64
 	const exhaust_velocity::Float64 =1000
 	const max_thrust::Int = 100
 		
 	throttle::Float64=0
-	wet_mass::Float64 = 0
 	declination::Float64 = 0
+	
+	wet_mass::Float64 = 0
     position::Vec
     velocity::Vec
 end
@@ -21,12 +23,14 @@ end
 mass(ship) = ship.dry_mass + ship.wet_mass
 thrust(ship) = ship.max_thrust * ship.throttle * (ship.wet_mass > 0)
 
-
-
-function thrust_vector(ship) 
+function heading(ship)
 	(ρ̂, τ̂) = basis(ship.position)
 	ϕ = ship.declination
-	return thrust(ship) * (ρ̂*cos(ϕ) + τ̂*sin(ϕ))
+	return ρ̂*cos(ϕ) + τ̂*sin(ϕ)
+end
+
+function thrust_vector(ship) 
+	return thrust(ship) * heading(ship)
 end
 
 mass_flow_rate(ship) = thrust(ship) / ship.exhaust_velocity
