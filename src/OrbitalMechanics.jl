@@ -23,7 +23,14 @@ include("ship.jl")
 export Planet, surface_gravity, surface_speed, circular_orbit_speed
 include("planet.jl")
 
-export specific_energy, semi_major_axis, period, eccentricity, eccentricity_vector, apsies, apoapsis, periapsis
+export specific_energy, 
+	semi_major_axis, 
+	period, 
+	eccentricity, 
+	eccentricity_vector, 
+	apsies, 
+	apoapsis, 
+	periapsis
 include("Orbit.jl")
 
 
