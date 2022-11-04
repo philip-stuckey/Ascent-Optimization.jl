@@ -34,4 +34,11 @@ export specific_energy,
 include("orbit.jl")
 
 
+export Simulate!
+include("simulation.jl")
+
+
+export plot_orbit
+include("plotting.jl")
+
 end # module OrbitalMechanics
