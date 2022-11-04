@@ -31,7 +31,7 @@ export specific_energy,
 	apsies, 
 	apoapsis, 
 	periapsis
-include("Orbit.jl")
+include("orbit.jl")
 
 
 end # module OrbitalMechanics
