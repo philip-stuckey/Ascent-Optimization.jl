@@ -4,12 +4,33 @@ Base.@kwdef mutable struct Ship
 	const exhaust_velocity::Float64 =1000
 	const max_thrust::Int = 100
 		
-	throttle::Float64=0
+	throttle::Float64=1
 	declination::Float64 = 0
 	
 	wet_mass::Float64 = 0
     position::Vec
     velocity::Vec
+end
+
+function Ship(
+	body::Planet;
+	Δv, 
+	dry_mass, 
+	TWR=2, 
+	vₑₓ=1000,
+	position=Vec(0,body.radius,0),
+	velocity=Vec(surface_speed(body),0,0)
+)
+	g = surface_gravity(body)
+	total_mass = dry_mass*exp(Δv/vₑₓ)
+	return Ship(;
+		dry_mass,
+		exhaust_velocity=vₑₓ,
+		max_thrust = TWR*g*total_mass,
+		wet_mass = total_mass - dry_mass,
+		position,
+		velocity
+	)
 end
 
 function Base.setproperty!(ship::Ship, name::Symbol, x) 
