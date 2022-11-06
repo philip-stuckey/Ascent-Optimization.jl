@@ -4,7 +4,19 @@ Base.@kwdef struct SimulationParameters
     time_step::Float64
 	margin::Float64
 	target_altitude::Float64
+	snapshot_rate::Int=60
+	time_limit::Float64=20
 end
+
+
+const default_body = Planet(1e8,1e3,0.0)
+const standard_parameters = SimulationParameters(
+	body=default_body,
+	initial_ship=Ship(default_body,Δv=2000, TWR=2, dry_mass=20),
+	time_step=10^-5,
+	margin=10.0,
+	target_altitude=default_body.radius*1.5
+)
 
 function Eulars!(ship::Ship, body::Planet; Δt=0.001)
 	μ = body.gravitational_parameter
