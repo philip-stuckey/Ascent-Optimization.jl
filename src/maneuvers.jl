@@ -1,10 +1,10 @@
-struct Maneuver
-    done::Function
-    throttle::Function
-    declination::Function
+struct Maneuver{D,T,U}
+    done::D
+    throttle::T
+    declination::U
 end
-
-function Maneuver(done, throttle::Float64=0, declination::Float64=0) 
+    
+function Maneuver(;done, throttle::Float64=0.0, declination::Float64=0.0) 
     return Maneuver(done, (_...)-> throttle, (_...)-> declination)
 end
 
@@ -30,8 +30,4 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     end
     push!(path, deepcopy(ship))
     return path
-end
-
-
-
 end
