@@ -43,8 +43,11 @@ export plot_orbit, colTuple
 include("plotting.jl")
 
 
-export Maneuver, runManeuver
+export Maneuver, runManeuver!
 include("maneuvers.jl")
+
+export Model, runModel, reward
+include("modeling.jl")
 
 
 end # module OrbitalMechanics
