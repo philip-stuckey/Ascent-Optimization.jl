@@ -46,7 +46,7 @@ export Maneuver, runManeuver!
 include("maneuvers.jl")
 
 export Model, runModel, reward
-include("modeling.jl")
+include("MachineLearning/modeling.jl")
 
 
 end # module OrbitalMechanics
