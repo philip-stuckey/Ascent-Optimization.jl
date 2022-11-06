@@ -1,3 +1,11 @@
+Base.@kwdef struct SimulationParameters
+    body::Planet
+    initial_ship::Ship
+    time_step::Float64
+	margin::Float64
+	target_altitude::Float64
+end
+
 function Eulars!(ship::Ship, body::Planet; Δt=0.001)
 	μ = body.gravitational_parameter
 	(ρ̂, _) = basis(ship.position)
