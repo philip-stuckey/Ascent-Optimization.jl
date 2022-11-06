@@ -52,10 +52,11 @@ take a model and some initial conditions, use the model to control the ascent of
 ship off the body, then coast to apopapsis and \"circularize\" (or at least get the periapsis over the `target_altitude`). 
 
 The coast and circularize maneuvers requare their own meathods of `runManeuver` (see below)"
-function runModel(model::Model, parameters::SimulationParameters)
+function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 	
 	ship = deepcopy(parameters.initial_ship)
-	path = Ship[deepcopy(ship)]
+	path === nothing || push!(path(deepcopy(ship)))
+
 	target_altitude = parameters.target_altitude
 	margin = parameters.margin
 
