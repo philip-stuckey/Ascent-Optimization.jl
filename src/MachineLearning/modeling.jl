@@ -85,16 +85,3 @@ function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 	return (ship, path)
 end
 
-
-"The model is rewarded if it can put a ship into orbit with a specific peripasis using the least ΔV"
-function reward(ship,body; target_altitude)
-	Δv = delta_v(ship)
-	p = periapsis(ship,body)
-	return Δv #* (target_altitude^2 - (p-target_altitude)^2)
-end
-
-function reward(model::Model, parameters::SimulationParameters) 
-	(ship, _) = runModel(model,	parameters)
-	Δv = delta_v(ship)
-	return reward(ship, parameters.body; parameters.target_altitude)
-end
