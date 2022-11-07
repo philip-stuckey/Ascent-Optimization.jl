@@ -2,7 +2,7 @@
 Base.@kwdef mutable struct Ship
     const dry_mass::Float64
 	const exhaust_velocity::Float64 =1000
-	const max_thrust::Int = 100
+	const max_thrust::Float64 = 100
 		
 	throttle::Float64=1
 	declination::Float64 = 0
