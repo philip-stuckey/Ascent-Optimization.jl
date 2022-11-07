@@ -31,7 +31,10 @@ export specific_energy,
 	eccentricity_vector, 
 	apsies, 
 	apoapsis, 
-	periapsis
+	periapsis,
+	apsis_velocity, 
+	apoapsis_velocity, 
+	periapsis_velocity
 include("orbit.jl")
 
 
