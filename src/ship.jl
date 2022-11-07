@@ -34,11 +34,14 @@ function Ship(
 end
 
 function Base.setproperty!(ship::Ship, name::Symbol, x) 
-	if name == :throttle
-		setfield!(ship,:throttle, min(1.0, max(0.0, x)))
+	v = if name == :throttle
+		min(oneunit(x), max(zero(x), x))
+	elseif name == :wet_mass
+		max(zero(x), x)
 	else
-		setfield!(ship,name, x)
+		x
 	end
+	setfield!(ship, name, v)
 end
 
 mass(ship) = ship.dry_mass + ship.wet_mass
