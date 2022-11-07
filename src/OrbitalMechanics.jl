@@ -35,7 +35,7 @@ export specific_energy,
 include("orbit.jl")
 
 
-export Simulate!
+export Simulate!, SimulationParameters, standard_parameters
 include("simulation.jl")
 
 
@@ -45,7 +45,7 @@ include("plotting.jl")
 export Maneuver, runManeuver!
 include("maneuvers.jl")
 
-export Model, runModel, reward
+export Model, runModel
 include("MachineLearning/modeling.jl")
 
 
