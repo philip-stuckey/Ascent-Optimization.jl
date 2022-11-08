@@ -35,7 +35,7 @@ end
 
 function Base.setproperty!(ship::Ship, name::Symbol, x) 
 	v = if name == :throttle
-		min(oneunit(x), max(zero(x), x))
+		clamp(x, zero(x), oneunit(x))
 	elseif name == :feul_mass
 		max(zero(x), x)
 	else
