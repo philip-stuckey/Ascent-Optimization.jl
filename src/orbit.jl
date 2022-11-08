@@ -8,7 +8,7 @@ end
 function semi_major_axis(ship,body) 
 	μ = body.gravitational_parameter
 	ε = specific_energy(ship,body)
-	return -μ/(2*ε)
+	return sign(ε)*μ/(2*ε)
 end
 
 function period(ship, body)
@@ -25,12 +25,11 @@ function eccentricity(ship,body)
 end
 
 function eccentricity_vector(ship,body)
-	r = ship.position
 	r̂ = normalize(ship.position)
 	v = ship.velocity
 	l = specific_angular_momentum(ship)
 	μ = body.gravitational_parameter
-	return r̂ - (v×l)/μ
+	return (v×l)/μ - r̂
 end
 
 ±(a,b) = (a+b, a-b)
@@ -82,6 +81,12 @@ end
 function orbital_angular_speed(ship,body)
 	T = period(ship,body)
 	return 2π/T
+end
+
+function true_anomaly(ship,body)
+	e⃗ = eccentricity_vector(ship,body)
+	r⃗ = ship.position
+	return normalize(e⃗) ⋅ normalize(r⃗)
 end
 
 function time_to_apsis(ship,body)
