@@ -17,6 +17,7 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     for t in 0:Δt:parameters.time_limit
         maneuver.done(ship) && break
         delta_v(ship) <= 0 && break
+        specific_energy(ship,body) >=0 && break
 
         ship.throttle=maneuver.throttle(ship,t)
         ship.declination = maneuver.declination(ship,t)
