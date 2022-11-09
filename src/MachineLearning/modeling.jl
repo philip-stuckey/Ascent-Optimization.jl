@@ -53,29 +53,35 @@ ship off the body, then coast to apopapsis and \"circularize\" (or at least get 
 
 The coast and circularize maneuvers requare their own meathods of `runManeuver` (see below)"
 function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
+	
 	ship = deepcopy(parameters.initial_ship)
 	path === nothing || push!(path,deepcopy(ship))
-	
+
 	target_altitude = parameters.target_altitude
-	margin = 0
+	margin = parameters.margin
 	body = parameters.body
-	params = standard_parameters
-	
+
 	ascent = Maneuver(
 		model,
 		done=(_...)->apoapsis(ship, body) >= target_altitude + margin,
 	)
-	runManeuver!(ship, ascent, params; path)
-		
-	circularize =  Maneuver(
-		(ship1)->periapsis(ship1, body) >= target_altitude,
-		(ship,_...)->float(time_to_apoapsis(ship,body) <= 0.5 ),
-		(ship,_...)->declination=π/2
+
+	coast = Maneuver(
+		done=(_...)->norm(ship.position) >= target_altitude,
+		throttle=0.0,
+		declination=π/2
 	)
-	
-	runManeuver!(ship, circularize, params; path)
+
+	circularize = Maneuver(
+		done=(_...)->periapsis(ship, body) >= target_altitude,
+		throttle=1.0,
+		declination= π/2 - abs(ship.position⋅eccentricity_vector(ship,body))
+	)
+
+	for maneuver in (ascent, coast, circularize)
+		runManeuver!(ship, maneuver, parameters; path)
+	end
 
 	return (ship, path)
 end
-
 
