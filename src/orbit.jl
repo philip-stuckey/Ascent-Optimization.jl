@@ -52,7 +52,7 @@ periapsis(ship,body) = apsies(ship;body)[1]
 function apsis_velocity(ship; body::Planet)
 	μ = body.gravitational_parameter
     ε = specific_energy(ship,body)
-    l = specific_angular_momentum(ship)
+    l = norm(specific_angular_momentum(ship))
 	return  if ε < 0
 		(μ ± √(μ^2 + 2ε*(l⋅l))) ./ l
 	else
