@@ -28,6 +28,6 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
             loops_since_last_snapshot=0
         end
     end
-    push!(path, deepcopy(ship))
+    path === nothing || push!(path, deepcopy(ship))
     return path
 end
