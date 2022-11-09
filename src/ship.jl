@@ -7,7 +7,7 @@ Base.@kwdef mutable struct Ship
 	throttle::Float64=1
 	declination::Float64 = 0
 	
-	feul_mass::Float64 = 0
+	fuel_mass::Float64 = 0
     position::Vec
     velocity::Vec
 end
@@ -44,7 +44,7 @@ function Base.setproperty!(ship::Ship, name::Symbol, x)
 	setfield!(ship, name, v)
 end
 
-mass(ship::Ship) = ship.dry_mass + ship.feul_mass
+mass(ship::Ship) = ship.dry_mass + ship.fuel_mass
 thrust(ship::Ship) = ship.max_thrust * ship.throttle * (ship.fuel_mass > 0)
 
 function heading(ship)
