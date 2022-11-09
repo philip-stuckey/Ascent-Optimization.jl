@@ -45,7 +45,7 @@ include("simulation.jl")
 export plot_orbit, colTuple, animate_path
 include("plotting.jl")
 
-export Maneuver, runManeuver!
+export Maneuver, runManeuver!, burn_time
 include("maneuvers.jl")
 
 export Model, runModel
