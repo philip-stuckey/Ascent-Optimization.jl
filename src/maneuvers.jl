@@ -31,3 +31,12 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     path === nothing || push!(path, deepcopy(ship))
     return path
 end
+
+function burn_time(ship, delta_v; throttle=ship.throttle, thrust = throttle*ship.max_thrust) 
+	vₑₓ = ship.exhaust_velocity
+	Δv = delta_v
+	ṁ = thrust / vₑₓ
+	m₀ = mass(ship)
+	# Δv/vₑₓ = log(m/(m₀ + ṁ t)) => m₀*exp(Δv/vₑₓ) = m₀ + ṁt => 
+	return m₀*(exp(Δv/vₑₓ))/ṁ
+end
