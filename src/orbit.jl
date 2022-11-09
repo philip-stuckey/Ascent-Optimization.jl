@@ -112,7 +112,7 @@ function time_since_periapsis(ship,body)
 	return M*T/(2π)
 end
 
-function time_to_apsis(ship,body)
+function time_to_apoapsis(ship,body)
 	T= period(ship,body)
 	tₚ = time_since_periapsis(ship,body)
 	return T/2 - tₚ

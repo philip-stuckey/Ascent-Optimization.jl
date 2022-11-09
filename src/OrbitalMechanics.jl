@@ -39,7 +39,8 @@ export specific_energy,
 	time_to_apsis,
 	true_anomaly,
 	eccentric_anomaly,
-	mean_anomaly
+	mean_anomaly,
+	time_to_apoapsis
 include("orbit.jl")
 
 
