@@ -10,7 +10,7 @@ end
 
 function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     body=parameters.body
-    Δt=parameters.Δt
+    Δt=parameters.time_step
     snapshot_rate = parameters.snapshot_rate
 	
     loops_since_last_snapshot=0
@@ -18,8 +18,8 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
         maneuver.done(ship) && break
         delta_v(ship) <= 0 && break
 
-        ship.throttle=maneuver.throttle(t)
-        ship.declination = maneuver.declination(t)
+        ship.throttle=maneuver.throttle(ship,t)
+        ship.declination = maneuver.declination(ship,t)
         Simulate!(ship, body; Δt)
         loops_since_last_snapshot += 1
 

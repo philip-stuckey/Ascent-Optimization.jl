@@ -40,8 +40,8 @@ function Maneuver(model::Model; done)
 	dfunc = declination(model)
 	return Maneuver(
 		done, 
-		t->tfunc(t), 
-		t->dfunc(t)
+		(_,t)->tfunc(t), 
+		(_,t)->dfunc(t)
 	)
 end
 
@@ -75,7 +75,7 @@ function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 	circularize = Maneuver(
 		done=(_...)->periapsis(ship, body) >= target_altitude,
 		throttle=1.0,
-		declination=π/2
+		declination= π/2 - abs(ship.position⋅eccentricity_vector(ship,body))
 	)
 
 	for maneuver in (ascent, coast, circularize)
