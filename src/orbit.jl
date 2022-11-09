@@ -83,10 +83,14 @@ function orbital_angular_speed(ship,body)
 	return 2π/T
 end
 
-function true_anomaly(ship,body)
-	e⃗ = eccentricity_vector(ship,body)
-	r⃗ = ship.position
-	return normalize(e⃗) ⋅ normalize(r⃗)
+angle(a, b) = acos(clamp(a⋅b/(norm(a)*norm(b)), -1, 1))
+function true_anomaly(ship, body)
+	θ = angle(ship.position, eccentricity_vector(ship,body))
+	if ship.position ⋅ ship.velocity > 0
+		return  θ
+	else
+		return 2π - θ
+	end
 end
 
 function time_to_apsis(ship,body)
