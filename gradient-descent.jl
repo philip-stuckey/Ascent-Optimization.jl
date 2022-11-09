@@ -55,25 +55,6 @@ N=10
 # ╔═╡ 7cc4b431-6936-481b-9a3f-7e6927a3080a
 θ₁ = range(-0.3, 0.44π, length=N)
 
-# ╔═╡ 44f08774-9995-4dea-994d-8158b73bd641
-# ╠═╡ disabled = true
-#=╠═╡
-coarse_search = [loss([ω, θ₀, θ₁]) for ω in Ω, θ₀ in θ₀, θ₁ in θ₁]
-  ╠═╡ =#
-
-# ╔═╡ d97aefcb-7e57-48ba-a493-f6924e2fec30
-#=╠═╡
-begin
-	(u,v) = -normalize(∇₀₀) 
-	
-	heatmap(θ₀, θ₁, coarse_search[10,:,:], title="ω = $(Ω[10])", formatter=x-> @sprintf("%.2fπ", x/π))
-	#scatter!([0],[0])
-	#quiver!([0],[0], quiver=([u],[v]))
-	#xlims!(extrema(θ₀)...)
-	#ylims!(extrema(θ₁)...)
-end
-  ╠═╡ =#
-
 # ╔═╡ f93b2938-7eae-4075-b132-98db3b8eecad
 ∇loss(v) = finite_difference_gradient(loss, v, relstep=0.1)
 
@@ -99,7 +80,7 @@ end
 	
 
 # ╔═╡ b6da62f2-7d12-41ff-877c-9bef1a083ba0
-for steps in 2:-1:1
+for steps in 100:-1:1
 	try
 		global trained_parameters, _, losses, _ = trainModel!(∇loss, steps=steps, ω₀=0.3, θ₀=zeros(4),α=1e-5);
 		break
@@ -178,9 +159,7 @@ end
 # ╠═c1dbad33-c0af-4fcb-85f1-9a84b8f0371d
 # ╠═83b816c5-341a-4c93-82cd-a241990e0cee
 # ╠═7cc4b431-6936-481b-9a3f-7e6927a3080a
-# ╠═44f08774-9995-4dea-994d-8158b73bd641
 # ╠═f443c908-1ab1-4b2f-908e-43eb2bd7417b
-# ╠═d97aefcb-7e57-48ba-a493-f6924e2fec30
 # ╠═cc1f1df3-a90f-4f7d-9859-be395eccf4e3
 # ╠═f93b2938-7eae-4075-b132-98db3b8eecad
 # ╠═4a2b752e-994a-40a6-96f4-472cfd7558d0
