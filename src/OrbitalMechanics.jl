@@ -34,7 +34,8 @@ export specific_energy,
 	periapsis,
 	apsis_velocity, 
 	apoapsis_velocity, 
-	periapsis_velocity
+	periapsis_velocity,
+	true_anomaly
 include("orbit.jl")
 
 
