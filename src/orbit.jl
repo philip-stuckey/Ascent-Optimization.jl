@@ -93,6 +93,20 @@ function true_anomaly(ship, body)
 	end
 end
 
+function eccentric_anomaly(ship,body)
+	e = eccentricity(ship,body)
+	f =  true_anomaly(ship,body)
+	return atan(√(1-e^2)*sin(f)/ (e + cos(f))) + π
+end
+
+
+function mean_anomaly(ship,body)
+	e = eccentricity(ship,body)
+	E = eccentric_anomaly(ship,body)
+	return E - e*sin(E)
+end
+
+
 function time_to_apsis(ship,body)
 	T= period(ship,body)
 	θ = ship.position ⋅ eccentricity_vector(ship,body)

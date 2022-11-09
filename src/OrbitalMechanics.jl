@@ -35,7 +35,9 @@ export specific_energy,
 	apsis_velocity, 
 	apoapsis_velocity, 
 	periapsis_velocity,
-	true_anomaly
+	true_anomaly,
+	eccentric_anomaly,
+	mean_anomaly
 include("orbit.jl")
 
 
