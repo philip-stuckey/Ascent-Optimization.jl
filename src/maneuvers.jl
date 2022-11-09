@@ -32,7 +32,7 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     return path
 end
 
-function burn_time(ship, delta_v; throttle=ship.throttle, thrust = throttle*ship.max_thrust) 
+function burn_time(ship, delta_v; throttle=ship.throttle, thrust = throttle*ship.max_thrust)
 	vₑₓ = ship.exhaust_velocity
 	Δv = delta_v
 	ṁ = thrust / vₑₓ

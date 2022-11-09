@@ -31,7 +31,7 @@ declination(m::Model)  = extrapolate(
 
 "This function takes a model and returns a function that specfies the throttle of a
 ship at a given time. right now it's clamped to full throttle"
-throttle(m::Model) = (_...)-> 1.0 #cubic_spline_interpolation(m.t, m.T)
+throttle(::Model) = (_...)-> 1.0 #cubic_spline_interpolation(m.t, m.T)
 
 
 # plugging the model into the maneuver system is relativly easy
