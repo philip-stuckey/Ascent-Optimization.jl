@@ -4,7 +4,7 @@ struct Maneuver{D,T,U}
     declination::U
 end
     
-function Maneuver(;done, throttle::Float64=0.0, declination::Float64=0.0) 
+function Maneuver(;done, throttle::T=0.0, declination::T=0.0) where T <: Real
     return Maneuver(done, (_...)-> throttle, (_...)-> declination)
 end
 
