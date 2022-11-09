@@ -75,7 +75,7 @@ function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 	circularize = Maneuver(
 		done=(_...)->periapsis(ship, body) >= target_altitude,
 		throttle=1.0,
-		declination= π/2 - abs(ship.position⋅eccentricity_vector(ship,body))
+		declination= π/2
 	)
 
 	for maneuver in (ascent, coast, circularize)
