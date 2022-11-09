@@ -106,11 +106,16 @@ function mean_anomaly(ship,body)
 	return E - e*sin(E)
 end
 
+function time_since_periapsis(ship,body)	
+	T = period(ship,body)
+	M = mean_anomaly(ship,body)
+	return M*T/(2π)
+end
 
 function time_to_apsis(ship,body)
 	T= period(ship,body)
-	θ = ship.position ⋅ eccentricity_vector(ship,body)
-	return θ*T/(2π)
+	tₚ = time_since_periapsis(ship,body)
+	return T/2 - tₚ
 end
 
 weight(ship, body) = mass(ship) * surface_gravity(body)

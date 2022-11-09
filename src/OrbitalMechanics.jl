@@ -35,6 +35,8 @@ export specific_energy,
 	apsis_velocity, 
 	apoapsis_velocity, 
 	periapsis_velocity,
+	time_since_periapsis,
+	time_to_apsis,
 	true_anomaly,
 	eccentric_anomaly,
 	mean_anomaly
