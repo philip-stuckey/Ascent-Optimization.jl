@@ -17,6 +17,12 @@ begin
 	using LinearAlgebra
 end
 
+# ╔═╡ cc1f1df3-a90f-4f7d-9859-be395eccf4e3
+using FiniteDiff: finite_difference_gradient
+
+# ╔═╡ 70954042-99b5-4937-9abf-b99997254594
+using Base.Threads
+
 # ╔═╡ f443c908-1ab1-4b2f-908e-43eb2bd7417b
 begin
 	using Plots
@@ -69,8 +75,8 @@ function trainModel!(∇loss; ω₀=0.7, θ₀=zeros(2), steps=28, α=0.001, min
 	losses = zeros(steps) .- 1
 
 	for n in 1:steps
-		grad =  α .* ∇loss(θ)
-		losses[n] = loss(θ)
+		grad =  ∇reward(θ)
+		rewards[n] = reward(θ)
 		points[n,:] .= θ
 		grads[n,:] .= grad
 		θ .-= grad
@@ -80,12 +86,10 @@ end
 	
 
 # ╔═╡ b6da62f2-7d12-41ff-877c-9bef1a083ba0
-for steps in 100:-1:1
-	try
-		global trained_parameters, _, losses, _ = trainModel!(∇loss, steps=steps, ω₀=0.3, θ₀=zeros(4),α=1e-5);
-		break
-	catch e
-		@info "failed" steps e
+let M = 4, steps=100, α=0.001
+	global models = []
+	for m in 3:M
+		push!(models, trainModel!(∇reward; θ₀ = zeros(m).+0.001, steps, α))
 	end
 end
 
@@ -167,8 +171,6 @@ end
 # ╠═b6da62f2-7d12-41ff-877c-9bef1a083ba0
 # ╟─ffeb4092-754b-4da3-b1c7-c4b1e8a2bc30
 # ╠═006e849b-3feb-4a99-8d3f-fb99eb2168fd
-# ╠═8edd4485-98de-4861-9137-af42103e7614
-# ╠═86783c2f-a1ab-4390-b820-6e19010d8a55
 # ╠═d744f01f-2533-42aa-9d06-8c4edb361c10
 # ╠═7e432cd7-93c5-431a-84e2-aa4b87549dd0
 # ╠═bd2d10a0-946f-4c77-9b18-a9e51d45bf23
