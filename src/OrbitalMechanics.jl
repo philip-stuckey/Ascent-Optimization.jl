@@ -58,5 +58,8 @@ include("maneuvers.jl")
 export Model, runModel, reward
 include("MachineLearning/modeling.jl")
 
+#  going to have a naming conflict with `train_model` soon
+export ∇reward, train_model! 
+include("MachineLearning/gradient_descent.jl")
 
 end # module OrbitalMechanics
