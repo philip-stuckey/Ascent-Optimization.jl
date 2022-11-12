@@ -55,7 +55,7 @@ include("plotting.jl")
 export Maneuver, runManeuver!, burn_time
 include("maneuvers.jl")
 
-export Model, runModel
+export Model, runModel, reward
 include("MachineLearning/modeling.jl")
 
 
