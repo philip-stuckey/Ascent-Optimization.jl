@@ -1,8 +1,10 @@
 using Interpolations
+using Unitful: s
+using Unitful: Frequency
 
 "the model for the ascent uses a vector to generage a cubic spline of the angle of the ship from the verticle"
 Base.@kwdef struct Model
-	pitch_rate::Float64
+	pitch_rate::Frequency
 	declination::Vector{Float64}
 end
 
@@ -10,8 +12,8 @@ function pitch_times(model::Model)
 	θ₀ = first(model.declination)
 	θ₁ = last(model.declination)
 	ω = abs(model.pitch_rate)
-	t₀ = 0
-	t₁ = (θ₁ ≈ θ₀) ? 1.0 : abs(θ₁ - θ₀) / ω
+	t₀ = zero(1/ω)
+	t₁ = (θ₁ ≈ θ₀) ? oneunit(1/ω) : abs(θ₁ - θ₀) / ω
 	
 	return range(t₀, t₁, length=length(model.declination))
 end	
@@ -86,7 +88,7 @@ function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 end
 
 function reward(θ, parameters=standard_parameters)
-	model =Model(θ[1], θ[2:end])
+	model = Model(θ[1]/s, θ[2:end])
 	return reward(model, parameters)
 end
 
