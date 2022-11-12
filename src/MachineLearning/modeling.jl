@@ -42,8 +42,8 @@ function Maneuver(model::Model; done)
 	dfunc = declination(model)
 	return Maneuver(
 		done, 
-		(_,t)->tfunc(t), 
-		(_,t)->dfunc(t)
+		(_,t)->tfunc(t)|> float, 
+		(_,t)->dfunc(t) |> float
 	)
 end
 

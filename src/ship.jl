@@ -10,8 +10,8 @@ Base.@kwdef mutable struct Ship
 	declination::Float64 = 0
 	
 	fuel_mass::Mass = 0kg  # we're out of cream, would you like "no milk" instead?
-    position::Vec{Length}
-    velocity::Vec{Velocity}
+    position::Vec{L}  where L <:Length
+    velocity::Vec{T} where T <:Velocity
 end
 
 function Ship(
