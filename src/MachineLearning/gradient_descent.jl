@@ -15,6 +15,9 @@ function train_model!(∇reward; θ₀=zeros(3), steps=28, α=0.001, min_margina
 		if r - get(rewards,n-1, 0) < min_marginal_reward
 			θ .-= α .* grad
 			@info "marginal reward too low" r-get(rewards,n-1,0) min_marginal_reward
+            rewards = rewards[begin:n-1]
+            points = points[begin:n-1, :]
+            grads = grads[begin:n-1, :]
 			break
 		end
 		rewards[n] = r
