@@ -45,6 +45,9 @@ function stick_to_ground!(ship::Ship, body::Planet, Δt)
 	T⃗ = thrust_vector(ship)
 	m = mass(ship)
 	T⃗ -= min(0,T⃗⋅ρ̂)*ρ̂  # remove the downward component ot T⃗
+	ṁ = mass_flow_rate(ship)
+	
+	ship.fuel_mass -= ṁ*Δt
 	a⃗ = T⃗/m
 	
 	ship.velocity = ω*R * τ̂ + a⃗*Δt

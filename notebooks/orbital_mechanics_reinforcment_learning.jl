@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.9
+# v0.19.14
 
 using Markdown
 using InteractiveUtils
@@ -7,7 +7,7 @@ using InteractiveUtils
 # ╔═╡ 9a6fc386-5940-11ed-0eca-ef068c00402d
 begin
 	using Pkg;
-	Pkg.activate(".");
+	Pkg.activate("..");
 	using StaticArrays
 	using Plots
 	using LinearAlgebra
@@ -174,59 +174,6 @@ action_space = Iterators.product(range(-π/6,π/6, length=100),range(0,1,length=
 
 # ╔═╡ 43c6507e-8c39-4d2c-85f3-6059c6b1546c
 const earth = Planet(1e7,1e3,0.1)
-
-# ╔═╡ e0672db1-5a3a-4336-b4bb-63030172974d
-# ╠═╡ disabled = true
-#=╠═╡
-let body=earth
-	v₀ = body.angular_speed * body.radius
-	g = surface_gravity(body)
-	ship=Ship(
-		dry_mass=100, 
-		wet_mass=2000,
-		exhaust_velocity=2e5,
-		position=Vec(0,11.6,0), 
-		velocity=Vec(9,v₀,0),
-		max_thrust = 4*1100*g,
-		throttle=1
-	)
-	
-	state = SimulationState(ship, body, Ship[], [])
-	
-	initial_q = zeros(100)
-	learner = EpsilonExplorer(
-		0.5, 
-		0.1, 
-		Dict(action_space .=> initial_q), 
-		Dict(action_space .=> 0) 
-	)
-	runProblem(learner, state; steps=10^5, target_altitude=body.radius * 1.2)
-	declination = [ship.declination for declination in state.results]
-	plt = plot_orbit(state.ship, state.body)
-	
-	plot!(plt, Point2.(ship.position[1:2] for ship in state.results))
-	energy_plot = plot(
-		specific_energy.(state.results, Ref(state.body)),
-		label="specific energy",
-		legend=:bottomright
-	)
-
-
-	apsis_plot = plot(apoapsis.(state.results, Ref(body)),label="apoapsis")
-	plot!(apsis_plot, periapsis.(state.results, Ref(body)), label="periapsis")
-	plot(
-		plt, 
-		plot(last.(state.actions),label="reward"), 
-		energy_plot, 
-		apsis_plot, 
-		plot([Point2(ship.velocity[1:2]) for ship in state.results],label="velocity"),
-		# reward_plot
-		# plot(declination,label=join(extrema(declination),"\n")),
-		plot([ship.wet_mass for ship in state.results])
-	)
-
-end
-  ╠═╡ =#
 
 # ╔═╡ 99765703-7f0d-4901-9df4-3354f7153f29
 colTuple(v::Vec) = ([v[1]], [v[2]], [v[3]])

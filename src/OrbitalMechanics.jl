@@ -6,7 +6,8 @@ using LinearAlgebra
 export Vec, basis
 
 const Vec = SVector{3, Float64}
-basis(r⃗) = (normalize(r⃗), [0 1 0; -1 0 0; 0 0 0]*normalize(r⃗) )
+const rotation = SMatrix{3,3}([0 1 0; -1 0 0; 0 0 0])
+basis(r⃗) = (normalize(r⃗), rotation*normalize(r⃗) )
 
 
 export Planet, surface_gravity, surface_speed, circular_orbit_speed
@@ -54,8 +55,11 @@ include("plotting.jl")
 export Maneuver, runManeuver!, burn_time
 include("maneuvers.jl")
 
-export Model, runModel
+export Model, runModel, reward
 include("MachineLearning/modeling.jl")
 
+#  going to have a naming conflict with `train_model` soon
+export ∇reward, train_model! 
+include("MachineLearning/gradient_descent.jl")
 
 end # module OrbitalMechanics
