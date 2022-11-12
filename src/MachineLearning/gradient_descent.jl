@@ -6,7 +6,7 @@ function train_model!(∇reward; θ₀=zeros(3), steps=28, α=0.001, min_margina
 	θ = θ₀[:]
 	points = zeros(steps,length(θ))
 	grads = zeros(steps,length(θ))
-	rewards = zeros(steps) .- 1
+	rewards = zeros(steps)
 
 	for n in 1:steps
 		grad =  ∇reward(θ)
