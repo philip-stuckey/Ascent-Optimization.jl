@@ -38,7 +38,7 @@ function apsies(ship; body::Planet)
     μ = body.gravitational_parameter
     ε = specific_energy(ship,body)
     l = specific_angular_momentum(ship)
-    return  if ε < 0
+    return  if ε < zero(ε)
 		(-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
 	else
 		((-μ + √(μ^2 + 2ε*(l⋅l))) ./ 2ε, Inf)
