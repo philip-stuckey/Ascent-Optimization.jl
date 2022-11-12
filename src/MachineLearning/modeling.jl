@@ -85,11 +85,15 @@ function runModel(model::Model, parameters::SimulationParameters; path=Ship[])
 	return (ship, path)
 end
 
-function reward(θ)
-	body = standard_parameters.body
-	target_altitude = standard_parameters.target_altitude
+function reward(θ, parameters=standard_parameters)
+	model =Model(θ[1], θ[2:end])
+	return reward(model, parameters)
+end
+
+function reward(model::Model, parameters=standard_parameters)
+	body = parameters.body
+	target_altitude = parameters.target_altitude
 	
-	model = Model(θ[1], θ[2:end])
-	(ship, _) = runModel(model, standard_parameters, path=nothing)
+	(ship, _) = runModel(model, parameters, path=nothing)
 	return delta_v(ship)*(target_altitude < periapsis(ship,body))
 end
