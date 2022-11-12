@@ -24,7 +24,7 @@ using Plots, Printf
 
 
 # ╔═╡ d64ce408-fdc0-44f6-8095-a924029a7b22
-runModel(Model(0.1, [0.0, π/2]), standard_parameters)
+runModel(Model(0.4, [0.0, π/2]), standard_parameters)
 
 # ╔═╡ 26cd5fee-fc67-47d3-a73f-d4ee9c88e882
 let target_altitude=15000
@@ -41,7 +41,7 @@ let target_altitude=15000
 	ship = deepcopy(params.initial_ship)
 	
 	ascent = Maneuver(
-		Model(0.1, [0.0, π/2]),
+		Model(0.2, [0.0, π/2]),
 		done=(_...)->apoapsis(ship, body) >= target_altitude,
 	)
 	global path=Ship[]
@@ -49,7 +49,7 @@ let target_altitude=15000
 	circularize =  Maneuver(
 		(ship1)->periapsis(ship1, body) >= target_altitude,
 		(ship,_...)->float(time_to_apoapsis(ship,body) <= 0.5 ),
-		(ship,_...)->declination=π/2
+		(ship,_...)->declination=π/2 - 0.05* (norm(ship.position) < target_altitude)
 	)
 	runManeuver!(ship, circularize, params; path)
 end
