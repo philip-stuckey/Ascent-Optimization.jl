@@ -2,7 +2,7 @@ using FiniteDiff: finite_difference_gradient
 
 ∇reward(θ) = finite_difference_gradient(reward, θ, relstep=0.01)
 
-function trainModel!(∇reward; θ₀=zeros(3), steps=28, α=0.001, min_marginal_reward=0.0)
+function train_model!(∇reward; θ₀=zeros(3), steps=28, α=0.001, min_marginal_reward=0.0)
 	θ = θ₀[:]
 	points = zeros(steps,length(θ))
 	grads = zeros(steps,length(θ))
