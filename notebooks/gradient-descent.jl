@@ -10,17 +10,12 @@ begin
 	Pkg.activate("..")
 end
 
-# ╔═╡ e7b24203-e2a9-4b2f-8036-828a44a00085
-using OrbitalMechanics
-
 # ╔═╡ 20d7a4cc-66f9-4345-a60f-f86d147edefe
 begin
+	using OrbitalMechanics
 	using ThreadsX
 	using Base.Iterators: product
 end
-
-# ╔═╡ 0e74a7c9-538a-4084-ac66-ab25ed40969c
-using BenchmarkTools
 
 # ╔═╡ 70954042-99b5-4937-9abf-b99997254594
 using Base.Threads
@@ -89,14 +84,12 @@ end
 
 # ╔═╡ Cell order:
 # ╠═d9e27bbc-5de6-11ed-3e0d-6d8758d91729
-# ╠═e7b24203-e2a9-4b2f-8036-828a44a00085
 # ╠═82cf3afa-c50a-47b4-b98e-2d5a05da3712
 # ╠═ab75e29b-2bdd-4641-b921-85402ed062fd
 # ╠═0833664f-d19c-40e5-bca3-ca8f526c0a14
 # ╠═20d7a4cc-66f9-4345-a60f-f86d147edefe
 # ╠═7d7348ee-c73b-4f7c-bee0-b49bfe54b6b2
 # ╠═801d53f1-e446-41f3-9b5d-a166d6c831c9
-# ╠═0e74a7c9-538a-4084-ac66-ab25ed40969c
 # ╠═70954042-99b5-4937-9abf-b99997254594
 # ╠═b6da62f2-7d12-41ff-877c-9bef1a083ba0
 # ╠═f443c908-1ab1-4b2f-908e-43eb2bd7417b
