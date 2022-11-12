@@ -1,14 +1,5 @@
 using FiniteDiff: finite_difference_gradient
 
-function reward(θ)
-	body = standard_parameters.body
-	target_altitude = standard_parameters.target_altitude
-	
-	model = Model(θ[1], θ[2:end])
-	(ship, _) = runModel(model, standard_parameters, path=nothing)
-	return delta_v(ship)*(target_altitude < periapsis(ship,body))
-end
-
 ∇reward(θ) = finite_difference_gradient(reward, θ, relstep=0.01)
 
 function trainModel!(∇reward; θ₀=zeros(3), steps=28, α=0.001, min_marginal_reward=0.0)
