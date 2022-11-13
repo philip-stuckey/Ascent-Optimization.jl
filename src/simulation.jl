@@ -26,7 +26,6 @@ function Eulars!(ship::Ship, body::Planet; Δt=0.001s)
 	r⃗ = ship.position
 	m = mass(ship)
 	v = ship.velocity
-	ϕ = ship.declination
 	T⃗ = thrust_vector(ship)
 	ṁ = mass_flow_rate(ship)
 	

@@ -1,9 +1,10 @@
-using Unitful
+import Unitful
+using Unitful: Quantity
 const 𝕃 = Unitful.𝐋
 const 𝕋 = Unitful.𝐓
 
 struct Planet
-    gravitational_parameter::Quantity{Float64, 𝕃^3/𝕋^2}
+    gravitational_parameter::Quantity{Float64, 𝕃^3*𝕋^-2, typeof(m^3/s^2)}
     radius::Length
     angular_speed::Frequency
 end
