@@ -5,7 +5,7 @@ Base.@kwdef struct SimulationParameters
     time_step::Time
 	margin::Length
 	target_altitude::Length
-	snapshot_rate::Int=60
+	snapshot_rate::Frequency=60/s  # this should really be in a different set of parameters
 	time_limit::Time=20s
 end
 
