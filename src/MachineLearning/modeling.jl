@@ -91,7 +91,9 @@ function reward(θ, parameters=standard_parameters)
 	return reward(model, parameters)
 end
 
-function reward(model::Model, parameters=standard_parameters)
+
+const RewardType = typeof(0.0m/s)
+function reward(model::Model, parameters=standard_parameters)::RewardType
 	body = parameters.body
 	target_altitude = parameters.target_altitude
 	
