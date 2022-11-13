@@ -1,4 +1,3 @@
-using Unitful: Mass, Velocity, Length, Force
 using Unitful: kg, m, s, kN
 
 Base.@kwdef mutable struct Ship
@@ -55,7 +54,7 @@ function heading(ship)
 	return ρ̂*cos(ϕ) + τ̂*sin(ϕ)
 end
 
-function thrust_vector(ship) 
+function thrust_vector(ship)::Vec{Force} 
 	return thrust(ship) * heading(ship)
 end
 

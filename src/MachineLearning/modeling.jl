@@ -1,6 +1,5 @@
 using Interpolations
 using Unitful: s
-using Unitful: Frequency
 
 "the model for the ascent uses a vector to generage a cubic spline of the angle of the ship from the verticle"
 Base.@kwdef struct Model

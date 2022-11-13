@@ -4,8 +4,8 @@ const 𝕋 = Unitful.𝐓
 
 struct Planet
     gravitational_parameter::Quantity{Float64, 𝕃^3/𝕋^2}
-    radius::Unitful.Length
-    angular_speed::Unitful.Frequency
+    radius::Length
+    angular_speed::Frequency
 end
 
 surface_gravity(body::Planet) = body.gravitational_parameter / body.radius^2

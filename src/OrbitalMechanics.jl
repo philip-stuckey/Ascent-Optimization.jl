@@ -5,6 +5,8 @@ using LinearAlgebra
 
 export Vec, basis
 
+include("units.jl")
+
 const Vec{T} = SVector{3, T}
 const rotation = SMatrix{3,3}([0 1 0; -1 0 0; 0 0 0])
 basis(r⃗) = (normalize(r⃗), rotation*normalize(r⃗) )
