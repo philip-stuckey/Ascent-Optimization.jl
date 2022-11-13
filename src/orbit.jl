@@ -53,7 +53,7 @@ function apsis_velocity(ship; body::Planet)
 	μ = body.gravitational_parameter
     ε = specific_energy(ship,body)
     l = norm(specific_angular_momentum(ship))
-	return  if ε < 0
+	return  if ε < zero(ε)
 		(μ ± √(μ^2 + 2ε*(l⋅l))) ./ l
 	else
 		((μ + √(μ^2 + 2ε*(l⋅l))) ./ l, 0)
@@ -86,7 +86,7 @@ end
 angle(a, b) = acos(clamp(a⋅b/(norm(a)*norm(b)), -1, 1))
 function true_anomaly(ship, body)
 	θ = angle(ship.position, eccentricity_vector(ship,body))
-	if ship.position ⋅ ship.velocity > 0
+	if ship.position ⋅ ship.velocity > zero(ship.position ⋅ ship.velocity)
 		return  θ
 	else
 		return 2π - θ

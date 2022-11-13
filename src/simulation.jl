@@ -1,5 +1,4 @@
 using  Unitful: m,kg,s
-using Unitful: Time,Length
 Base.@kwdef struct SimulationParameters
     body::Planet
     initial_ship::Ship
@@ -15,7 +14,7 @@ const default_body = Planet(1e8m^3/s^2,1e3m,0.0/s)
 
 const standard_parameters = SimulationParameters(
 	body=default_body,
-	initial_ship=Ship(default_body,Δv=2000m/s, TWR=2, dry_mass=20kg),
+	initial_ship=Ship(default_body,Δv=2000.0m/s, TWR=2, dry_mass=20.0kg),
 	time_step=(10^-5)s,
 	margin=10.0m,
 	target_altitude=default_body.radius*1.5
@@ -47,7 +46,7 @@ function stick_to_ground!(ship::Ship, body::Planet, Δt)
 	(ρ̂, τ̂) = basis(ship.position)
 	T⃗ = thrust_vector(ship)
 	m = mass(ship)
-	T⃗ -= min(0,T⃗⋅ρ̂)*ρ̂  # remove the downward component ot T⃗
+	T⃗ -= min(zero(T⃗⋅ρ̂),T⃗⋅ρ̂)*ρ̂  # remove the downward component ot T⃗
 	ṁ = mass_flow_rate(ship)
 	
 	ship.fuel_mass -= ṁ*Δt
