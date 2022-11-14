@@ -1,25 +1,26 @@
+using Unitful: kg, m, s, kN
 
 Base.@kwdef mutable struct Ship
-    const dry_mass::Float64
-	const exhaust_velocity::Float64 =1000
-	const max_thrust::Float64 = 100
+    const dry_mass::Mass
+	const exhaust_velocity::Velocity = 1000m/s
+	const max_thrust::Force = 100kN
 		
 	throttle::Float64=1
 	declination::Float64 = 0
 	
-	fuel_mass::Float64 = 0
-    position::Vec
-    velocity::Vec
+	fuel_mass::Mass = 0kg  # we're out of cream, would you like "no milk" instead?
+    position::Vec{Length} 
+    velocity::Vec{Velocity}
 end
 
 function Ship(
 	body::Planet;
-	Δv, 
-	dry_mass, 
+	Δv::Velocity, 
+	dry_mass::Mass, 
 	TWR=2, 
-	vₑₓ=1000,
-	position=Vec(0,body.radius,0),
-	velocity=Vec(surface_speed(body),0,0)
+	vₑₓ=1000m/s,
+	position=Vec(0m,body.radius,0m),
+	velocity=Vec(surface_speed(body),0m/s,0m/s)
 )
 	g = surface_gravity(body)
 	total_mass = dry_mass*exp(Δv/vₑₓ)
@@ -45,7 +46,7 @@ function Base.setproperty!(ship::Ship, name::Symbol, x)
 end
 
 mass(ship::Ship) = ship.dry_mass + ship.fuel_mass
-thrust(ship::Ship) = ship.max_thrust * ship.throttle * (ship.fuel_mass > 0)
+thrust(ship::Ship) = ship.max_thrust * ship.throttle * (ship.fuel_mass > 0kg)
 
 function heading(ship)
 	(ρ̂, τ̂) = basis(ship.position)
@@ -53,7 +54,7 @@ function heading(ship)
 	return ρ̂*cos(ϕ) + τ̂*sin(ϕ)
 end
 
-function thrust_vector(ship) 
+function thrust_vector(ship)::Vec{Force} 
 	return thrust(ship) * heading(ship)
 end
 
