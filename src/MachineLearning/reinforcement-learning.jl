@@ -50,25 +50,17 @@ function apply(model::Model, action)
 	return Model(declination = θ₀ .+ Δθ, pitch_rate = ω₀ + Δω)
 end
 
-Base.@kwdef struct TrainingParameters
-	learning_rate::Float64
-	exploration_rate::Float64
-	step_limit::Int
-	max_reward::Float64
-end
-
 function train_model!(
 	m₀::Model, 
 	simulation_parameters::SimulationParameters, 
-	explorer::EpsilonExplorer,
-	action_space; 
+	explorer::EpsilonExplorer; 
 	rewards=nothing
 )
 	r₀ = reward(m₀, simulation_parameters)
 	
-	learner = QModel(action_space)
+	learner = QModel(action_space(m₀))
 	model = m₀
-	for n in 1:params.step_limit
+	for _ in 1:params.step_limit
 		rewards == nothing || push!(rewards, r₀)
 		action = choice(explorer, learner)
 		model = apply(model, action)
