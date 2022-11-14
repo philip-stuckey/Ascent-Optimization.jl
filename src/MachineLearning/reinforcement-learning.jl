@@ -1,7 +1,7 @@
 using LinearAlgebra
 using Base.Iterators: product, flatten
 
-randargmax(A) = rand([n for (n,a) in enumerate(A) if a .== maximum(A)])
+randargmax(A) = rand(findall(==(maximum(A)), A))
 
 struct EpsilonExplorer
     learning_rate::Float64
@@ -15,9 +15,7 @@ end
 
 QModel(actions) = QModel(Dict(actions.=>0.0), Dict(actions.=>0))
 
-function choice(explorer::EpsilonExplorer, model::QModel)
-	actions = collect(keys(model.quality))
-	vals = values(model.quality)
+function choice(explorer::EpsilonExplorer, actions, vals)
 	return if explorer.learning_rate >= rand()
 		rand(actions)
 	else
@@ -59,14 +57,19 @@ function train_model!(
 )
 	r₀ = reward(m₀, simulation_parameters)
 	
-	learner = QModel(action_space(m₀))
+	actions = action_space(m₀)
+	vals = zeros(length(actions))
+
+	learner = QModel(actions)
 	model = m₀
 	for _ in 1:steps
 		rewards == nothing || push!(rewards, r₀)
-		action = choice(explorer, learner)
+		action = choice(explorer, actions, vals)
 		model = apply(model, action)
 		r = reward(model, simulation_parameters)
 		update!(learner, action, r-r₀, explorer.learning_rate)
+		vals .= values(learner.quality)
+		
 		if r < r₀
 			model = apply(model, negate_action(action))
 		else
