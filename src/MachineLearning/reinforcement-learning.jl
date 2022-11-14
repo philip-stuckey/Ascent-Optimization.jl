@@ -8,6 +8,13 @@ struct EpsilonExplorer
     exploration_rate::Float64
 end
 
+struct QModel{A}
+	quality::Dict{A, Float64}
+    count::Dict{A, Int}
+end
+
+QModel{R}(actions) where R = QModel(Dict(actions.=>zero(R)), Dict(actions.=>0))
+
 function choice(explorer::EpsilonExplorer, model::QModel)
 	actions = collect(keys(model.quality))
 	vals = values(model.quality)
@@ -17,13 +24,6 @@ function choice(explorer::EpsilonExplorer, model::QModel)
 		actions[randargmax(vals)]
 	end
 end
-
-struct QModel{A}
-	quality::Dict{A, Float64}
-    count::Dict{A, Int}
-end
-
-QModel{R}(actions) where R = QModel(Dict(actions.=>zero(R)), Dict(actions.=>0))
 
 function update!(model::QModel, action, reward, learning_rate)
 	model.count[action] += 1
