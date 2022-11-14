@@ -8,12 +8,12 @@ struct EpsilonExplorer
     exploration_rate::Float64
 end
 
-struct QModel{A}
-	quality::Dict{A, Float64}
+struct QModel{A, R}
+	quality::Dict{A, R}
     count::Dict{A, Int}
 end
 
-QModel(actions) = QModel(Dict(actions.=>0.0), Dict(actions.=>0))
+QModel{R}(actions) where R = QModel(Dict(actions.=>zero(R)), Dict(actions.=>0))
 
 function choice(explorer::EpsilonExplorer, actions, vals)
 	return if explorer.learning_rate >= rand()
@@ -35,7 +35,7 @@ function action_space(model::Model)
 	Δθ = deg2rad(1)
 	
 	pitch_space = flatten((-1,1) .* Ref(Δθ * ê) for ê in basis)
-	rate_space = [-0.1, 0.1]
+	rate_space = [-0.1, 0.1] ./ s
 	return collect(product(pitch_space, rate_space))[:]
 end
 
@@ -58,9 +58,9 @@ function train_model!(
 	r₀ = reward(m₀, simulation_parameters)
 	
 	actions = action_space(m₀)
-	vals = zeros(length(actions))
+	vals = zeros(RewardType, length(actions))
 
-	learner = QModel(actions)
+	learner = QModel{RewardType}(actions)
 	model = m₀
 	for _ in 1:steps
 		rewards == nothing || push!(rewards, r₀)
