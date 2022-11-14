@@ -54,13 +54,14 @@ function train_model!(
 	m₀::Model, 
 	simulation_parameters::SimulationParameters, 
 	explorer::EpsilonExplorer; 
-	rewards=nothing
+	rewards=nothing,
+	steps=100
 )
 	r₀ = reward(m₀, simulation_parameters)
 	
 	learner = QModel(action_space(m₀))
 	model = m₀
-	for _ in 1:params.step_limit
+	for _ in 1:steps
 		rewards == nothing || push!(rewards, r₀)
 		action = choice(explorer, learner)
 		model = apply(model, action)
