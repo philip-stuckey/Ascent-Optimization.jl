@@ -62,4 +62,7 @@ include("MachineLearning/modeling.jl")
 export ∇reward, train_model! 
 include("MachineLearning/gradient_descent.jl")
 
+export train_model!, EpsilonExplorer
+include("MachineLearning/reinforcement-learning.jl")
+
 end # module OrbitalMechanics
