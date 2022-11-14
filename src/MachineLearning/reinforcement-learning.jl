@@ -13,7 +13,7 @@ struct QModel{A}
     count::Dict{A, Int}
 end
 
-QModel{R}(actions) where R = QModel(Dict(actions.=>zero(R)), Dict(actions.=>0))
+QModel(actions) = QModel(Dict(actions.=>0.0), Dict(actions.=>0))
 
 function choice(explorer::EpsilonExplorer, model::QModel)
 	actions = collect(keys(model.quality))
