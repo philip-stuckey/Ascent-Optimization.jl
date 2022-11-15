@@ -14,10 +14,10 @@ function runManeuver!(ship, maneuver::Maneuver, parameters; path=nothing)
     snapshot_rate = parameters.snapshot_rate
 	
     loops_since_last_snapshot=0
-    for t in 0:Δt:parameters.time_limit
+    for t in zero(Δt):Δt:parameters.time_limit
         maneuver.done(ship) && break
-        delta_v(ship) <= 0 && break
-        specific_energy(ship,body) >=0 && break
+        delta_v(ship) <= zero(delta_v(ship)) && break
+        specific_energy(ship,body) >= zero(specific_energy(ship,body)) && break
 
         ship.throttle=maneuver.throttle(ship,t)
         ship.declination = maneuver.declination(ship,t)

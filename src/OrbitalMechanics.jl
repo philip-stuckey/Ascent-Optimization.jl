@@ -5,10 +5,11 @@ using LinearAlgebra
 
 export Vec, basis
 
-const Vec = SVector{3, Float64}
+include("units.jl")
+
+const Vec{T} = SVector{3, T}
 const rotation = SMatrix{3,3}([0 1 0; -1 0 0; 0 0 0])
 basis(r⃗) = (normalize(r⃗), rotation*normalize(r⃗) )
-
 
 export Planet, surface_gravity, surface_speed, circular_orbit_speed
 include("planet.jl")
@@ -61,5 +62,8 @@ include("MachineLearning/modeling.jl")
 #  going to have a naming conflict with `train_model` soon
 export ∇reward, train_model! 
 include("MachineLearning/gradient_descent.jl")
+
+export train_model!, EpsilonExplorer
+include("MachineLearning/reinforcement-learning.jl")
 
 end # module OrbitalMechanics

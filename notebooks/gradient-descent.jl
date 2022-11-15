@@ -17,8 +17,14 @@ begin
 	using Base.Iterators: product
 end
 
+# ╔═╡ ded14bf9-dcf1-432f-b21a-e0a8927a0c8d
+using Unitful
+
 # ╔═╡ 70954042-99b5-4937-9abf-b99997254594
 using Base.Threads
+
+# ╔═╡ bd927ee2-5f30-4865-83b4-0ef307c190b1
+using Unitful: s,m
 
 # ╔═╡ f443c908-1ab1-4b2f-908e-43eb2bd7417b
 begin
@@ -46,13 +52,13 @@ let M =1, θ₁ = Θ[M]
 end
 
 # ╔═╡ b6da62f2-7d12-41ff-877c-9bef1a083ba0
-let M = 3, steps=200, α=0.0001
+let M = 3, steps=200, α=0.0001s/m, min_marginal_reward=0*m/s
 	global models = []
 	@threads for m in 3:M
 		θ₀ = zeros(m)
 		θ₀[1] = 0.2
 		θ₀[end] = 2π
-		push!(models, train_model!(∇reward; θ₀, steps, α))
+		push!(models, train_model!(∇reward; θ₀, steps, α, min_marginal_reward))
 	end
 end
 
