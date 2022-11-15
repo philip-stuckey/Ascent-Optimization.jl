@@ -45,10 +45,23 @@ N=10
 # ╔═╡ 7d7348ee-c73b-4f7c-bee0-b49bfe54b6b2
 rewards = ThreadsX.map(x-> reward(Vec(x)), Iterators.product(Ω, Θ, Θ))
 
+# ╔═╡ e3bd314c-1744-49bf-a1b7-6e3c7eb663a5
+reward(Vec((0.1, 0, 0)))
+
+# ╔═╡ 7122065f-02b3-414d-81af-b7411b537c8c
+∇reward([0.1,0,0])
+
+# ╔═╡ c23c4b2f-e095-4bf9-934d-34eefa5541cd
+ω, θ₁, θ₂ = (0.1, 0, π/2)
+
+# ╔═╡ 3d3a5674-5989-4bb0-8723-03ec72cbefc2
+δω, δθ₁, δθ₂ = ∇reward([ω, θ₁, θ₂]) .|> ustrip
+
 # ╔═╡ 801d53f1-e446-41f3-9b5d-a166d6c831c9
-let M =1, θ₁ = Θ[M]
-	heatmap(Ω, Θ, rewards[:,:,M], title="θ₂=$θ₁")
-	#quiver!([0], [0], quiver=0.001 .* ([∇₀₀[2]], [∇₀₀[3]]))
+let M =1, θ = Θ[M]
+	heatmap(Ω, Θ, rewards[:,:, M], title="θ₂=$θ")
+	quiver!([ω], [θ], quiver=([δω/1000], [δθ₁/1000]))
+	scatter!([ω], [θ])
 end
 
 # ╔═╡ b6da62f2-7d12-41ff-877c-9bef1a083ba0
@@ -77,15 +90,26 @@ let m = models[1].model
 end
 
 # ╔═╡ 53fd6a63-21c9-400e-b99e-f61ab45aa7c9
-let M =4, θ₁ = Θ[M]
-	heatmap(Ω, Θ, rewards[:,:,M], title="θ₂=$θ₁")
-	scatter!(Point2.(eachrow(models[1].path[:, [1,2]])))
+let M =4, θ₁ = Θ[M], N = 
+	heatmap(Ω, Θ, rewards[:,:,M], title="final Δv where θ₂=$(@sprintf("%.2f",θ₁))")
+
+	(model, _, path, grads) = models[1]
+	
+	ωs, θ₁s, θ₂s = eachcol(path)
+	scatter!(ωs[[1,end]], θ₁s[[1,end]])
+	plot!(ωs, θ₁s)
+	xlabel!("pitch rate")
+	ylabel!("initial pitch")
+	
+	#δωs, δθ₁s, δθ₂s = eachcol(grads[[1,end],:]) ./ 100000 .|> ustrip
+	#quiver!(ωs, θ₁s, quiver=(δωs, δθ₁s))
+	#xlims!(0.0, 0.5)
 end
 
 # ╔═╡ d744f01f-2533-42aa-9d06-8c4edb361c10
-let model = models[1].model
+let model = models[1].model, body = standard_parameters.body
 	(ship,path) = runModel(model, standard_parameters)
-	animate_path(path, standard_parameters.body)
+	animate_path(path,body)
 end
 
 # ╔═╡ Cell order:
@@ -95,8 +119,14 @@ end
 # ╠═0833664f-d19c-40e5-bca3-ca8f526c0a14
 # ╠═20d7a4cc-66f9-4345-a60f-f86d147edefe
 # ╠═7d7348ee-c73b-4f7c-bee0-b49bfe54b6b2
+# ╠═e3bd314c-1744-49bf-a1b7-6e3c7eb663a5
+# ╠═7122065f-02b3-414d-81af-b7411b537c8c
+# ╠═c23c4b2f-e095-4bf9-934d-34eefa5541cd
+# ╠═ded14bf9-dcf1-432f-b21a-e0a8927a0c8d
+# ╠═3d3a5674-5989-4bb0-8723-03ec72cbefc2
 # ╠═801d53f1-e446-41f3-9b5d-a166d6c831c9
 # ╠═70954042-99b5-4937-9abf-b99997254594
+# ╠═bd927ee2-5f30-4865-83b4-0ef307c190b1
 # ╠═b6da62f2-7d12-41ff-877c-9bef1a083ba0
 # ╠═f443c908-1ab1-4b2f-908e-43eb2bd7417b
 # ╠═006e849b-3feb-4a99-8d3f-fb99eb2168fd
