@@ -1,6 +1,6 @@
 
 abstract type AbstractAtmosphere end
-
+using Unitful: kg, m
 using LinearAlgebra
 
 function airspeed(ship,body)
@@ -11,18 +11,24 @@ function airspeed(ship,body)
     return v - r*ω*τ
 end
 
-function drag_force(ship,body)
+function drag_force(ship, body)::Vec{Force}
     height = norm(ship.position)
     ρ = density(body.atmosphere, height)
     v = airspeed(ship,body)
-    D = drag_coefficient(ship)
-    drag = ρ * (v⋅v) * D 
-    return -v * drag
+    A = 2.0m^2  # drag coefficient
+    d = 1.0
+    drag = ρ * (v⋅v) * d * A 
+    return (iszero(v) ? ustrip(v) : -normalize(v)) * drag
 end
 
+struct EmptyAtmosphere <: AbstractAtmosphere
+end
+
+density(::EmptyAtmosphere,r) = 0kg/m^3
+
 struct ConstAtmosphere <: AbstractAtmosphere
-    height::Float64
-    density::Float64
+    height::Length
+    density::Density
 end
 
 function density(atmosphere::ConstAtmosphere, height) 
@@ -31,8 +37,8 @@ end
 
 using Interpolations
 struct InterpolatedAtmosphere <: AbstractAtmosphere
-    heights::Vector{Float64}
-    density::Vector{Float64}
+    heights::Vector{Length}
+    density::Vector{Density}
 end
 
 function density(atmosphere::InterpolatedAtmosphere, height)

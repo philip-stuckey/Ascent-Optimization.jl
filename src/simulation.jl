@@ -30,7 +30,7 @@ function Eulars!(ship::Ship, body::Planet; Δt=0.001s)
 	ṁ = mass_flow_rate(ship)
 	
 	ship.fuel_mass -= ṁ*Δt
-	a⃗ = T⃗/m - ρ̂ * μ/(r⃗⋅r⃗) - v*ṁ/m
+	a⃗ = T⃗/m - ρ̂ * μ/(r⃗⋅r⃗) - v*ṁ/m - drag_force(ship, body)/m
 	ship.velocity += a⃗*Δt
 	ship.position += ship.velocity * Δt
 	

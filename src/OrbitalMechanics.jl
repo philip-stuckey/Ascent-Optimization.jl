@@ -11,6 +11,8 @@ const Vec{T} = SVector{3, T}
 const rotation = SMatrix{3,3}([0 1 0; -1 0 0; 0 0 0])
 basis(r⃗) = (normalize(r⃗), rotation*normalize(r⃗) )
 
+include("atmosphere.jl")
+
 export Planet, surface_gravity, surface_speed, circular_orbit_speed
 include("planet.jl")
 
