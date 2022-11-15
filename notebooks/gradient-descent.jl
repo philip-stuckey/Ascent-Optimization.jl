@@ -17,14 +17,8 @@ begin
 	using Base.Iterators: product
 end
 
-# ╔═╡ ded14bf9-dcf1-432f-b21a-e0a8927a0c8d
-using Unitful
-
 # ╔═╡ 70954042-99b5-4937-9abf-b99997254594
 using Base.Threads
-
-# ╔═╡ bd927ee2-5f30-4865-83b4-0ef307c190b1
-using Unitful: s,m
 
 # ╔═╡ f443c908-1ab1-4b2f-908e-43eb2bd7417b
 begin
@@ -32,6 +26,12 @@ begin
 	using Printf
 	using GeometryBasics: Point2, Point3
 end
+
+# ╔═╡ ded14bf9-dcf1-432f-b21a-e0a8927a0c8d
+using Unitful
+
+# ╔═╡ bd927ee2-5f30-4865-83b4-0ef307c190b1
+using Unitful: s,m
 
 # ╔═╡ 82cf3afa-c50a-47b4-b98e-2d5a05da3712
 N=10
@@ -65,7 +65,7 @@ end
 # ╔═╡ 006e849b-3feb-4a99-8d3f-fb99eb2168fd
 begin
 	plot([m.rewards for m in models],legend=:bottomright)
-	xlims!(0,110)
+	#xlims!(0,110)
 end
 
 # ╔═╡ 8cf78cf9-1bbd-417f-a9b9-8b5f2ed441a4
@@ -104,3 +104,5 @@ end
 # ╠═af736966-74ce-47aa-aa8f-d6386e87b4f9
 # ╠═53fd6a63-21c9-400e-b99e-f61ab45aa7c9
 # ╠═d744f01f-2533-42aa-9d06-8c4edb361c10
+# ╠═ded14bf9-dcf1-432f-b21a-e0a8927a0c8d
+# ╠═bd927ee2-5f30-4865-83b4-0ef307c190b1
