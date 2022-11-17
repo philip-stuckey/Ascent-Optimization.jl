@@ -43,6 +43,22 @@ These stages are
 
 The model controls the direction of the thrust during the ascent stage.
 
+### Reward function
+The reward function is defined as the delta-V if the final periapsis of the rocket is above the target altitude, and `0m/s` otherwise. 
+
+```julia
+const RewardType = typeof(0.0m/s)
+function reward(model::Model, body, target_altitude)::RewardType
+	(ship, _) = runModel(model)
+	return delta_v(ship)*(target_altitude < periapsis(ship,body))
+end
+```
+This was chosen because it is simple while also capturing what we want. Note that this reward function favors circular orbits, as they require the least 
+delta V for an orbit given periapsis.
+The hard cut-off for ships which don't get a high enough periapsis could be a problem in theory, but in practise it doesn't seem too bad.
+
+![Reward as a function of $\theta_1$ and $\theta_2](results/reward/theta1-vs-theta2.svg)
+
 ### Reinforcement Learning
 
 The method used here was inspired by (read plagerized from) <https://rl-book.com/>. 
