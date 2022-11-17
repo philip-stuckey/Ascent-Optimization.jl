@@ -12,7 +12,7 @@ end
 
 # ╔═╡ 20d7a4cc-66f9-4345-a60f-f86d147edefe
 begin
-	using OrbitalMechanics
+	using AscentOptimization
 	using ThreadsX
 	using Base.Iterators: product
 end
@@ -42,11 +42,20 @@ N=10
 # ╔═╡ 0833664f-d19c-40e5-bca3-ca8f526c0a14
 Θ = range(0,π/2, length=N)
 
+# ╔═╡ 52153d8c-d1d0-4811-8384-7100222c7738
+parameters= @set standard_parameters.body.atmosphere = AscentOptimization.ConstAtmosphere(1100m, 0.2kg/m^3)
+
+# ╔═╡ 916f7473-1f42-4fad-8360-57d8a0a21b4c
+reward(θ) = AscentOptimization.reward(θ,parameters)
+
 # ╔═╡ 7d7348ee-c73b-4f7c-bee0-b49bfe54b6b2
 rewards = ThreadsX.map(x-> reward(Vec(x)), Iterators.product(Ω, Θ, Θ))
 
 # ╔═╡ e3bd314c-1744-49bf-a1b7-6e3c7eb663a5
 reward(Vec((0.1, 0, 0)))
+
+# ╔═╡ 9b078717-b703-4afd-9362-fd195b29d7a0
+∇reward(θ) = AscentOptimization.∇(reward, θ)
 
 # ╔═╡ 7122065f-02b3-414d-81af-b7411b537c8c
 ∇reward([0.1,0,0])
@@ -106,9 +115,15 @@ let M =4, θ₁ = Θ[M], N =
 	#xlims!(0.0, 0.5)
 end
 
+# ╔═╡ a8b05348-87c6-405c-be3c-74a5d903cf3b
+let atmos = AscentOptimization.ConstAtmosphere(1.1e3m, 1kg/m^3), 
+	planet = Planet(1e8m^3/s^2,1e3m,0.0/s, atmos)
+	plot_orbit(standard_parameters.initial_ship, planet)
+end
+
 # ╔═╡ d744f01f-2533-42aa-9d06-8c4edb361c10
-let model = models[1].model, body = standard_parameters.body
-	(ship,path) = runModel(model, standard_parameters)
+let model = models[1].model, body = parameters.body
+	(ship,path) = runModel(model, parameters)
 	animate_path(path,body)
 end
 

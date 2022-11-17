@@ -1,4 +1,4 @@
-name = "OrbitalMechanics"
+name = "AscentOptimization"
 uuid = "5d32edf2-7c5d-41d6-a87d-d0d3ac278c06"
 authors = ["Philip Stuckey <developer.philip_stuckey@fastmail.com>"]
 version = "0.1.0"

@@ -11,7 +11,7 @@ begin
 	using Interpolations
 	using Plots
 	using LinearAlgebra
-	using OrbitalMechanics
+	using AscentOptimization
 	using Printf
 	using GeometryBasics: Point2
 	using Base.Threads
@@ -25,7 +25,7 @@ using Unitful: kg, m, s
 # ╔═╡ 67b5f6ff-8916-4bfa-afcc-ab787de6c063
 let model=Model(declination=[0,π/2+0.08], pitch_rate=0.4/s)
 	N = 1:5
-	rewards = OrbitalMechanics.Velocity[]
+	rewards = AscentOptimization.Velocity[]
 	times = []
 
 	# warm up
@@ -58,7 +58,7 @@ end
 # ╔═╡ 69e7e51b-0930-43bf-8d9b-f2901cca780a
 begin
 	global models = fill(Model(0.0/s, []), length(εs), length(αs))
-	global rewards = zeros(OrbitalMechanics.Velocity, length(εs), length(αs))
+	global rewards = zeros(AscentOptimization.Velocity, length(εs), length(αs))
 	for (n,α) in collect(enumerate(αs))
 		for (m,ε) in enumerate(εs)
 			k=1
@@ -84,7 +84,7 @@ heatmap(αs, εs, rewards)
 # ╔═╡ bd793b4b-9990-429c-be6a-47318a3073d1
 trained_model, training_rewards = let explorer = EpsilonExplorer(0.4,0.5)
 	model = Model(declination=[0, π/2], pitch_rate=1.0/s)
-	step_rewards = OrbitalMechanics.RewardType[]
+	step_rewards = AscentOptimization.RewardType[]
 	model =train_model!(model, standard_parameters, explorer, steps=100, rewards=step_rewards)
 	
 	(model, step_rewards)
@@ -92,7 +92,7 @@ end
 
 # ╔═╡ 87491a89-4b87-4fc9-844a-360a0736db6e
 random_model = let	
-	global random_model_rewards = OrbitalMechanics.RewardType[]
+	global random_model_rewards = AscentOptimization.RewardType[]
 	model =train_model!(
 		Model(declination=[0, π/2], pitch_rate=1.0/s), 
 		standard_parameters, 

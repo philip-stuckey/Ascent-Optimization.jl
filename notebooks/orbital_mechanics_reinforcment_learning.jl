@@ -14,7 +14,7 @@ begin
 	using Polynomials
 	using Printf
 	using GeometryBasics: Point2
-	using OrbitalMechanics
+	using AscentOptimizatoin
 	using LaTeXStrings
 	using Base.Threads
 	md"# Orbital Mechanics Sim"
@@ -404,7 +404,7 @@ function apsis_plot!(plt, path, a=0:1.2target_altitude, b = 0:1.2target_altitude
 	subpath = path[1:100:end]
 	path_plot!(
 		plt, 
-		collect.(OrbitalMechanics.apsies.(path; body))
+		collect.(AscentOptimization.apsies.(path; body))
 	)
 end
 

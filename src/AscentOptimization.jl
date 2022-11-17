@@ -1,4 +1,4 @@
-module OrbitalMechanics
+module AscentOptimization
 
 using StaticArrays
 using LinearAlgebra
@@ -68,4 +68,4 @@ include("MachineLearning/gradient_descent.jl")
 export train_model!, EpsilonExplorer
 include("MachineLearning/reinforcement-learning.jl")
 
-end # module OrbitalMechanics
+end # module AscentOptimization
