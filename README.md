@@ -79,6 +79,12 @@ doesn't work. So instead I used a finite difference method with a `relstep` twea
 This method is slower than some of the reinforcment learning runs, but as long as the code can deal with singularities (which I do by just backtracking 
 whenever the change in reward becomes negative), it can consistantly match performance with the best reinforcement learning runs.
 
+## Real time control. (WIP)
+My plan is to use the KOS (kerbal operating system) mod to control the ship using a machine learning model. I haven't decided if I want to have it send 
+telemetry over telnet to a julia script, which sends commands back to the ship, or if I want to try to run the model in kos.
+
+Ultimatly, is the round-trip lag small enough that I don't have to write cubic spline interpolation in what is essentially kerbal-basic.
+
 ## Results (WIP)
 
 ### Small Panet, No atmosphere
