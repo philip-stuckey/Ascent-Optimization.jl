@@ -45,8 +45,22 @@ The model controls the direction of the thrust during the ascent stage.
 
 ### Reinforcement Learning
 
-
 The method used here was inspired by (read plagerized from) <https://rl-book.com/>. 
+This code treats the problem of finding the optimal ascent trajectory like a game, where the moves are 
+$$ \omega += \pm\Delta\omega, \theta\_0 += \pm\Delta\theta .. \theta\_n += \pm\Delta\theta $$ 
+where $\omega$ and $\theta\_0..\theta\_n$ are the angular rate and angles used in the model, and $\Delta\omega$ and $\Delta\theta$ 
+are changes small enough that the model converges to the optimal solution, but big enough that it does so in a reasonable amount of time. 
+
+The code learns to play this game by storing an estimate of how good each move is (i.e. the "quality") and using an $\varepsilon$-greedy algorithem to 
+decide beween trying different moves, or reapplying the same move. After each move the reward is calculated and and the quality of that move is updated
+
+Because problem is pretty non-stationary (e.g. incrementing $\theta_n$ once may make the tragectory better, doing so twice might overshoot and make it 
+worse), the quality is updated with a constant learning rate, in order to bias the estimation to later moves. 
+
+This approach innitially showed some good performance. However but the fact that it was highly stochastic means that it's difficult to get consistant 
+performance, especially when trying to find good values of the two training parameters. (actually 4, but so far I've neglected $\Delta\omega$ and 
+$\Delta\theta$.
+
 
 ### Gradient descent. 
 
