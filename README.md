@@ -77,4 +77,4 @@ that way?". Because the reward function is a physics simulation (and therefore i
 doesn't work. So instead I used a finite difference method with a `relstep` tweaked until the gradient direction made sense. 
 
 This method is slower than some of the reinforcment learning runs, but as long as the code can deal with singularities (which I do by just backtracking 
-whenever the change in reqard becomes negative), it can consistantly match performance with the best reinforcement learning runs.
+whenever the change in reward becomes negative), it can consistantly match performance with the best reinforcement learning runs.
