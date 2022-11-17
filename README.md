@@ -66,10 +66,15 @@ Because problem is pretty non-stationary (e.g. incrementing $\theta_n$ once may 
 worse), the quality is updated with a constant learning rate, in order to bias the estimation to later moves. 
 
 This approach innitially showed some good performance. However but the fact that it was highly stochastic means that it's difficult to get consistant 
-performance, especially when trying to find good values of the two training parameters. (actually 4, but so far I've neglected $\Delta\omega$ and 
-$\Delta\theta$.
+performance, especially when trying to find good values of the two training parameters (actually 4, but so far I've neglected $\Delta\omega$ and 
+$\Delta\theta$).
 
 
-### Gradient descent. 
+### Gradient Descent. 
 
+I decieded to use gradient descent when looking at the path of an ascent trajectory through the "reward space", and thinking "why can't I just nudge it 
+that way?". Because the reward function is a physics simulation (and therefore it *probably* doesn't have an analytical solution) automatic differentiation
+doesn't work. So instead I used a finite difference method with a `relstep` tweaked until the gradient direction made sense. 
 
+This method is slower than some of the reinforcment learning runs, but as long as the code can deal with singularities (which I do by just backtracking 
+whenever the change in reqard becomes negative), it can consistantly match performance with the best reinforcement learning runs.
