@@ -78,3 +78,14 @@ doesn't work. So instead I used a finite difference method with a `relstep` twea
 
 This method is slower than some of the reinforcment learning runs, but as long as the code can deal with singularities (which I do by just backtracking 
 whenever the change in reward becomes negative), it can consistantly match performance with the best reinforcement learning runs.
+
+## Results (WIP)
+
+### Small Panet, No atmosphere
+
+### Realiztically sized planet, No Atmosphere
+
+### Kerbin, from Kerbal space program
+
+### Kerbin, but actually, in game
+
