@@ -47,7 +47,15 @@ The model controls the direction of the thrust during the ascent stage.
 
 The method used here was inspired by (read plagerized from) <https://rl-book.com/>. 
 This code treats the problem of finding the optimal ascent trajectory like a game, where the moves are 
-$$ \omega += \pm\Delta\omega, \theta\_0 += \pm\Delta\theta .. \theta\_n += \pm\Delta\theta $$ 
+
+$$ \omega -> \omega\pm\Delta\omega $$
+
+$$\theta\_0 -> \theta_0\pm\Delta\theta $$
+
+$$\vdots$$
+
+$$\theta\_n -> \theta_n\pm\Delta\theta $$
+
 where $\omega$ and $\theta\_0..\theta\_n$ are the angular rate and angles used in the model, and $\Delta\omega$ and $\Delta\theta$ 
 are changes small enough that the model converges to the optimal solution, but big enough that it does so in a reasonable amount of time. 
 
