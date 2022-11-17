@@ -59,6 +59,10 @@ The hard cut-off for ships which don't get a high enough periapsis could be a pr
 
 ![Reward as a function of $\theta_1$ and $\theta_2](results/reward/theta1-vs-theta2.svg)
 
+![Reward as a function of $\omega$ and $\theta_1](results/reward/omega-vs-theta1.svg)
+
+![Reward as a function of $\omega$ and $\theta_2](results/reward/omega-vs-theta2.svg)
+
 ### Reinforcement Learning
 
 The method used here was inspired by (read plagerized from) <https://rl-book.com/>. 
