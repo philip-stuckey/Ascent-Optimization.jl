@@ -12,7 +12,7 @@ end
 
 # ╔═╡ 20d7a4cc-66f9-4345-a60f-f86d147edefe
 begin
-	using OrbitalMechanics
+	using AscentOptimization
 	using ThreadsX
 	using Base.Iterators: product
 end
