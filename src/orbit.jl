@@ -41,7 +41,7 @@ function apsies(ship; body::Planet)
     return  if ε < zero(ε)
 		(-μ ± √(μ^2 + 2ε*(l⋅l))) ./ 2ε
 	else
-		((-μ + √(μ^2 + 2ε*(l⋅l))) ./ 2ε, Inf)
+		((-μ + √(μ^2 + 2ε*(l⋅l))) ./ 2ε, Length(Inf))
 	end
 end
 
