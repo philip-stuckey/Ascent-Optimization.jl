@@ -1,3 +1,4 @@
+using Unitful: m, s
 
 const Moho = Planet(
 	1.6860938e11*m^3/s^2,
