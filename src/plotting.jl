@@ -31,9 +31,9 @@ function plot_orbit(ship, body; legend=false, aspect_ratio=1, kwargs...)
 	return plt
 end
 
-function animate_path(path, body)
+function animate_path(path, body; kwargs...)
 	anim = @animate for (n,ship) in enumerate(path)
-		plt1 = plot_orbit(ship,body)
+		plt1 = plot_orbit(ship,body; kwargs...)
 		plot!(Point2.(ship.position[1:2] for ship in path[1:n]))
 		quiver!(Point2(ship.position[1:2]), quiver=colTuple(100*heading(ship)[1:2]))
 		e = eccentricity_vector(ship,body)*100
