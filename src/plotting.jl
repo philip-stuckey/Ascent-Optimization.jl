@@ -20,12 +20,14 @@ function plot_orbit(ship, body; legend=false, aspect_ratio=1, kwargs...)
 	plt = plot(;aspect_ratio, legend, kwargs...)
 	# plot!(plt, -o.(θ) .* cos.(θ  .- ϕ), -o.(θ) .* sin.(θ .- ϕ))
 	plot!(plt, R .* cos.(θ), R .* sin.(θ))
-	scatter!(plt, [apoapsis_point, periapsis_point])
+	if isfinite(apoapsis)
+		scatter!(plt, [apoapsis_point, periapsis_point])
+		annotate!(plt, [
+			(apoapsis_point...," $(@sprintf("%.2f",ustrip(apoapsis)))$(unit(apoapsis)) "),
+			(periapsis_point...," $(@sprintf("%.2f",ustrip(periapsis)))$(unit(periapsis)) ")
+		])
+	end
 	scatter!(plt, Point2(ship.position[1:2]))
-	annotate!(plt, [
-		(apoapsis_point...," $(@sprintf("%.2f",ustrip(apoapsis)))$(unit(apoapsis)) "),
-		(periapsis_point...," $(@sprintf("%.2f",ustrip(periapsis)))$(unit(periapsis)) ")
-	])
 	return plt
 end
 

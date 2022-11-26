@@ -56,7 +56,7 @@ function apsis_velocity(ship; body::Planet)
 	return  if ε < zero(ε)
 		(μ ± √(μ^2 + 2ε*(l⋅l))) ./ l
 	else
-		((μ + √(μ^2 + 2ε*(l⋅l))) ./ l, 0)
+		((μ + √(μ^2 + 2ε*(l⋅l))) ./ l, zero(Velocity))
 	end
 end
 
