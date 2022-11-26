@@ -1,7 +1,11 @@
 using FiniteDiff: finite_difference_gradient
 using Unitful: m, s
 
-∇reward(θ) = finite_difference_gradient(reward, θ, Val{:central}, typeof(0.1m/s))
+function ∇reward(θ, params=standard_parameters) 
+ 	return finite_difference_gradient(x->reward(x, params), θ, Val{:central}, RewardType)
+end
+	
+∇reward(params::SimulationParameters) = θ -> ∇reward(θ, params)
 
 function train_model!(∇reward; θ₀=zeros(3), steps=28, α=0.001s/m, min_marginal_reward=zero(RewardType))
 	θ = θ₀[:]
