@@ -43,6 +43,11 @@ These stages are
 
 The model controls the direction of the thrust during the ascent stage.
 
+### The Model
+The model consists of a list of angles and a rate, which together are used to generate a cubic spline which determines the direction the ship is pointing at any given time.
+
+Earlier versions also specified the thrust at any given time, but to keep the parameter space low, the thrust is fixed to 100% during the ascent. 
+
 ### Reward function
 The reward function is defined as the delta-V if the final periapsis of the rocket is above the target altitude, and `0m/s` otherwise. 
 
