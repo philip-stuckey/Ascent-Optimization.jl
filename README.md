@@ -70,7 +70,7 @@ The hard cut-off for ships which don't get a high enough periapsis could be a pr
 
 ### Reinforcement Learning
 
-The method used here was inspired by (read plagerized from) <https://rl-book.com/>. 
+The method used here was ~~plagerised from~~ *inspired by* <https://rl-book.com/>. 
 This code treats the problem of finding the optimal ascent trajectory like a game, where the moves are 
 
 $$ \omega -> \omega\pm\Delta\omega $$
